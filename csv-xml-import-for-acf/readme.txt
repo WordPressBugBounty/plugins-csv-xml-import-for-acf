@@ -2,7 +2,7 @@
 Contributors: soflyy, wpallimport
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -102,6 +102,9 @@ To import Advanced Custom Fields (ACF), you must have the ACF Import Add-On acti
 1. The ACF add-on.
 
 == Changelog ==
+
+= 1.0.1 =
+* bug fix: ensure values are properly passed to wpdb prepare
 
 = 1.0.0 =
 * Initial release on WP.org.
