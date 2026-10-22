@@ -1,8 +1,37 @@
 <?php
 /** @noinspection Annotator */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+$pmai_has_selected_group = FALSE;
+
+// Field values arrive later over AJAX, so the checked field groups are the only
+// mapping signal available while the section is rendered.
+if ( function_exists( 'wp_all_import_has_mapped_value' ) && ! empty( $groups ) && ! empty( $post['acf'] ) ) {
+	foreach ( $groups as $pmai_group ) {
+		// Groups rendered by another add-on are force-selected through the hidden
+		// input below, which is not a choice the user made here.
+		if ( ! apply_filters( 'wp_all_import_acf_is_show_group', true, $pmai_group ) ) {
+			continue;
+		}
+
+		$pmai_group_keys = array( $pmai_group['ID'] );
+
+		if ( ! empty( $pmai_group['slug'] ) ) {
+			$pmai_group_keys[] = $pmai_group['slug'];
+		} elseif ( ! empty( $pmai_group['key'] ) ) {
+			$pmai_group_keys[] = $pmai_group['key'];
+		}
+
+		foreach ( $pmai_group_keys as $pmai_group_key ) {
+			if ( isset( $post['acf'][ $pmai_group_key ] ) && wp_all_import_has_mapped_value( $post['acf'][ $pmai_group_key ] ) ) {
+				$pmai_has_selected_group = TRUE;
+				break 2;
+			}
+		}
+	}
+}
 ?>
-<div class="wpallimport-collapsed closed pmai_options">
+<div class="wpallimport-collapsed<?php echo $pmai_has_selected_group ? '' : ' closed'; ?> pmai_options">
 	<div class="wpallimport-content-section">
 		<div class="wpallimport-collapsed-header">
 			<h3><?php esc_html_e('Advanced Custom Fields Add-On','csv-xml-import-for-acf');?></h3>

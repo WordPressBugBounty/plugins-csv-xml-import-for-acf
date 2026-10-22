@@ -361,7 +361,11 @@ final class ACFService {
 	 *
 	 * @return bool|int|\WP_Error
 	 */
-	public static function import_file( $atch_url, $pid, $logger, $fast = false, $search_in_gallery = false, $search_in_files = false, $importData = array() ) {
+	public static function import_file( $atch_url, $pid, $logger, $search_in_gallery = false, $search_in_files = false, $importData = array() ) {
+		// ACF Import Add-On Pro 4.0.2 and older still pass the removed fast-mode flag fourth.
+		if ( func_num_args() > 6 ) {
+			list( , , , , $search_in_gallery, $search_in_files, $importData ) = func_get_args();
+		}
 
 		// search file attachment by ID
 		if ( $search_in_gallery and is_numeric( $atch_url ) ) {
@@ -396,7 +400,7 @@ final class ACFService {
 			$fileName      = basename( $atch_url );
 		}
 
-		return PMXI_API::upload_image( $pid, $atch_url, $downloadFiles, $logger, true, $fileName, "files", $search_in_gallery, $importData['articleData'], $importData );
+		return PMXI_API::upload_image( $pid, $atch_url, $downloadFiles, $logger, true, $fileName, "files", $search_in_gallery, is_array( $importData ) && isset( $importData['articleData'] ) ? $importData['articleData'] : false, $importData );
 	}
 
 	/**

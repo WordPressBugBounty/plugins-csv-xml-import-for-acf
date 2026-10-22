@@ -1,8 +1,8 @@
 === WP All Import – Import Add-On for ACF ===
 Contributors: soflyy, wpallimport
 Requires at least: 5.0
-Tested up to: 7.0
-Stable tag: 1.0.8
+Tested up to: 7.1
+Stable tag: 1.0.9
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -102,6 +102,10 @@ To import Advanced Custom Fields (ACF), you must have the ACF Import Add-On acti
 1. The ACF add-on.
 
 == Changelog ==
+
+= 1.0.9 =
+* improvement: an import with ACF field groups selected reopens with the add-on section expanded
+* bug fix: Gallery fields no longer re-import a non-image file that is already in the Media Library when searching the Media Library is enabled
 
 = 1.0.8 =
 * bug fix: resolve PHP 8 warnings when importing nested ACF fields
